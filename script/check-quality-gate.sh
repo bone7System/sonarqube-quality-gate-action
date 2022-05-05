@@ -22,13 +22,13 @@ if [ -z "${serverUrl}" ] || [ -z "${ceTaskUrl}" ]; then
   exit 1
 fi
 
-task="$(curl --silent --fail --show-error --user "${SONAR_TOKEN}": "${ceTaskUrl}")"
+task="$(curl -k --silent --fail --show-error --user "${SONAR_TOKEN}": "${ceTaskUrl}")"
 status="$(jq -r '.task.status' <<< "$task")"
 
 until [[ ${status} != "PENDING" && ${status} != "IN_PROGRESS" ]]; do
     printf '.'
     sleep 5s
-    task="$(curl --silent --fail --show-error --user "${SONAR_TOKEN}": "${ceTaskUrl}")"
+    task="$(curl -k --silent --fail --show-error --user "${SONAR_TOKEN}": "${ceTaskUrl}")"
     status="$(jq -r '.task.status' <<< "$task")"
 done
 
