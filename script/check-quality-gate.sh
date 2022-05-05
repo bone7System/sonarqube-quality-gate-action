@@ -34,7 +34,7 @@ done
 
 analysisId="$(jq -r '.task.analysisId' <<< "${task}")"
 qualityGateUrl="${serverUrl}/api/qualitygates/project_status?analysisId=${analysisId}"
-qualityGateStatus="$(curl --silent --fail --show-error --user "${SONAR_TOKEN}": "${qualityGateUrl}" | jq -r '.projectStatus.status')"
+qualityGateStatus="$(curl -k --silent --fail --show-error --user "${SONAR_TOKEN}": "${qualityGateUrl}" | jq -r '.projectStatus.status')"
 
 if [[ ${qualityGateStatus} == "OK" ]];then
    success "Quality Gate has PASSED."
